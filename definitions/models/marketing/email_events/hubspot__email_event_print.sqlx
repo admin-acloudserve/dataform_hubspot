@@ -1,0 +1,14 @@
+config {
+    type: "table"
+  }
+
+js {
+  
+    function run() {
+      if (fivetran_utils.enabled_vars([constants.hubspot_marketing_enabled, constants.hubspot_email_event_enabled, constants.hubspot_email_event_print_enabled])) {
+          functions.email_events_joined(constants.email_event_print)
+      }
+    }
+}
+  
+  ${run()}

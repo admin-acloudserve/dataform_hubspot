@@ -1,13 +1,7 @@
-# ADD TEST DATA INTO BIGQUERY WITH DATASET CALLED HUBSPOT_COPY
+# THINGS TO DO 
 
-```
-for d in * ; 
-do    
-    FILE_NAME="$d"    
-    TABLENAME="${d%_data.*}"    
-    echo $FILE_NAME
-    echo $TABLENAME   
-    echo "bq load --source_format=CSV --skip_leading_rows=1 --autodetect=true hubspot_copy.${TABLENAME} ./${FILE_NAME}"    
-    bq load --source_format=CSV --skip_leading_rows=1 --autodetect=true hubspot_copy.$TABLENAME ./$FILE_NAME
-done
-```
+
+- convert dbt.utils.generate_surrogate_key
+- test the macro conversions
+- test includes "@admin-acloudserve/dataform_hubspot_source": "v0.0."
+
