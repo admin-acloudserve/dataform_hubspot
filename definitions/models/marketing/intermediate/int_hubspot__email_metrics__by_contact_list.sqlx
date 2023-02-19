@@ -1,108 +1,108 @@
-config {
-    type: "table"
-  }
+-- config {
+--     type: "table"
+--   }
 
-js {
+-- js {
   
-    function run() {
-      if (fivetran_utils.enabled_vars([constants.hubspot_marketing_enabled, constants.hubspot_email_event_enabled, hubspot_contact_list_member_enabled])) {
+--     function run() {
+--       if (fivetran_utils.enabled_vars([constants.hubspot_marketing_enabled, constants.hubspot_email_event_enabled, hubspot_contact_list_member_enabled])) {
 
 
-        email_metrics_columns = []
-        for (let i = 0; i < constants.email_metrics.length; i++) {
-            line = "SUM("constants.email_metrics[i],") as total_" constants.email_metrics[i],
-            line = "count(distinct case when ",constants.email_metrics[i]", then email_send_id end) as total_unique_", constants.email_metrics[i]
-            email_metrics_columns.push(line)
-        }
-
-
-
-          query = 
-`
-with email_sends as (
-
-    select *
-    from ${ ref('hubspot__email_sends') }
-
-), contact_list_member as (
-
-    select *
-    from ${ constants.contact_list_member }
-
-), joined as (
-
-    select
-        email_sends.*,
-        contact_list_member.contact_list_id
-    from email_sends
-    left join contact_list_member
-        using (contact_id)
-    where contact_list_member.contact_list_id is not null
-
-), email_metrics as (
-
-    select 
-        contact_list_id,
-        ${email_metrics_columns}
-    from joined
-    group by 1
-
-)
-
-select *
-from email_metrics
+--         email_metrics_columns = []
+--         for (let i = 0; i < constants.email_metrics.length; i++) {
+--             line = "SUM("constants.email_metrics[i],") as total_" constants.email_metrics[i],
+--             line = "count(distinct case when ",constants.email_metrics[i]", then email_send_id end) as total_unique_", constants.email_metrics[i]
+--             email_metrics_columns.push(line)
+--         }
 
 
 
+--           query = 
+-- `
+-- with email_sends as (
+
+--     select *
+--     from ${ ref('hubspot__email_sends') }
+
+-- ), contact_list_member as (
+
+--     select *
+--     from ${ constants.contact_list_member }
+
+-- ), joined as (
+
+--     select
+--         email_sends.*,
+--         contact_list_member.contact_list_id
+--     from email_sends
+--     left join contact_list_member
+--         using (contact_id)
+--     where contact_list_member.contact_list_id is not null
+
+-- ), email_metrics as (
+
+--     select 
+--         contact_list_id,
+--         ${email_metrics_columns}
+--     from joined
+--     group by 1
+
+-- )
+
+-- select *
+-- from email_metrics
 
 
-`
-        return query
-      }
-      return
-    }
-}
+
+
+
+-- `
+--         return query
+--       }
+--       return
+--     }
+-- }
   
-  ${run()}
+--   ${run()}
 
 
 
 
-{{ config(enabled=fivetran_utils.enabled_vars(['hubspot_marketing_enabled','hubspot_email_event_enabled','hubspot_contact_list_member_enabled']), materialized='table') }}
+-- {{ config(enabled=fivetran_utils.enabled_vars(['hubspot_marketing_enabled','hubspot_email_event_enabled','hubspot_contact_list_member_enabled']), materialized='table') }}
 
-with email_sends as (
+-- with email_sends as (
 
-    select *
-    from {{ ref('hubspot__email_sends') }}
+--     select *
+--     from {{ ref('hubspot__email_sends') }}
 
-), contact_list_member as (
+-- ), contact_list_member as (
 
-    select *
-    from {{ var('contact_list_member') }}
+--     select *
+--     from {{ var('contact_list_member') }}
 
-), joined as (
+-- ), joined as (
 
-    select
-        email_sends.*,
-        contact_list_member.contact_list_id
-    from email_sends
-    left join contact_list_member
-        using (contact_id)
-    where contact_list_member.contact_list_id is not null
+--     select
+--         email_sends.*,
+--         contact_list_member.contact_list_id
+--     from email_sends
+--     left join contact_list_member
+--         using (contact_id)
+--     where contact_list_member.contact_list_id is not null
 
-), email_metrics as (
+-- ), email_metrics as (
 
-    select 
-        contact_list_id,
-        {% for metric in var('email_metrics') %}
-        sum({{ metric }}) as total_{{ metric }},
-        count(distinct case when {{ metric }} > 0 then email_send_id end) as total_unique_{{ metric }}
-        {% if not loop.last %},{% endif %}
-        {% endfor %}
-    from joined
-    group by 1
+--     select 
+--         contact_list_id,
+--         {% for metric in var('email_metrics') %}
+--         sum({{ metric }}) as total_{{ metric }},
+--         count(distinct case when {{ metric }} > 0 then email_send_id end) as total_unique_{{ metric }}
+--         {% if not loop.last %},{% endif %}
+--         {% endfor %}
+--     from joined
+--     group by 1
 
-)
+-- )
 
-select *
-from email_metrics
+-- select *
+-- from email_metrics
