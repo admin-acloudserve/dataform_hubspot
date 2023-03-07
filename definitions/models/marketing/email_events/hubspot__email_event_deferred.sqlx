@@ -1,15 +1,15 @@
-config {
-    type: "table"
-  }
+-- config {
+--     type: "table"
+--   }
 
-js {
+-- js {
   
-    function run() {
-      if (fivetran_utils.enabled_vars([constants.hubspot_marketing_enabled, constants.hubspot_email_event_enabled, constants.hubspot_email_event_deferred_enabled])) {
-          functions.email_events_joined(constants.email_event_deferred)
-      }
-    }
-}
+--     function run() {
+--       if (fivetran_utils.enabled_vars([constants.hubspot_marketing_enabled, constants.hubspot_email_event_enabled, constants.hubspot_email_event_deferred_enabled])) {
+--           functions.email_events_joined(constants.email_event_deferred)
+--       }
+--     }
+-- }
   
-  ${run()}
+--   ${run()}
 

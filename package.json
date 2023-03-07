@@ -2,6 +2,7 @@
   "name": "fivetran_hubspot",
   "dependencies": {
     "@dataform/core": "2.0.1",
-    "@admin-acloudserve/dataform_hubspot_source": "v0.0.1"
+    "depend": "../depend",
+    "@admin-acloudserve/dataform_hubspot_source": "v0.0.6"
   }
 }
