@@ -2,4 +2,4 @@ config {
     type: "table"
 }
 
-SELECT ${ref("a")}
+SELECT * FROM  ${ref("a")}
