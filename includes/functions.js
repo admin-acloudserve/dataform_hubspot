@@ -21,13 +21,13 @@ function email_events_joined(base_model) {
     ), events as (
     
         select *
-        from ${constants.email_event}
+        from reportingByDataform_hubspot.stg_hubspot__email_event
     
     ),
     contacts as (
 
         select *
-        from ${contact}
+        from reportingByDataform_hubspot.stg_hubspot__contact
     
     ), 
     events_joined as (

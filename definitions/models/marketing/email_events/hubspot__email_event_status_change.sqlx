@@ -1,0 +1,22 @@
+config {
+  type: "table"
+}
+
+
+js {
+
+  function run() {
+    if (fivetran_utils.enabled_vars([
+        constants.hubspot_marketing_enabled, 
+        constants.hubspot_email_event_enabled, 
+        constants.hubspot_email_event_status_change_enabled])) {
+          query =  functions.email_events_joined('reportingByDataform_hubspot.stg_hubspot__email_event_status_change')
+          return query
+    }
+    return
+  }
+
+
+}
+
+${run()}
