@@ -1,5 +1,5 @@
 config {
-  type: "view"
+  type: "table"
 }
 
 
@@ -7,7 +7,8 @@ js {
 
   function run() {
     if (fivetran_utils.enabled_vars([constants.hubspot_marketing_enabled, constants.hubspot_contact_enabled, constants.hubspot_contact_merge_audit_enabled])) {
-      query =  `
+      query =  
+`
 with contacts as (
 
     select *
@@ -31,8 +32,7 @@ with contacts as (
 select *
 from contact_merge_removal
         
-        
-        `
+`
       return query
     }
     return
